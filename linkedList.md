@@ -1,4 +1,5 @@
 ## 删除链表的倒数第 N 个结点
+[网址](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
 
 * 思路1
 遍历一遍得到 length，第二次从头走 length - N
