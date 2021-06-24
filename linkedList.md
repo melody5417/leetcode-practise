@@ -16,6 +16,8 @@
 
 * 思路1 （自己的实现）
 
+![图片](./resources/linkedlist_1.png)
+
 ```
 /**
  * Definition for singly-linked list.
