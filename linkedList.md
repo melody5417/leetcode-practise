@@ -1,7 +1,7 @@
 ## 删除链表的倒数第 N 个结点
 [网址](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
 
-* 思路1
+* 思路1（自己的实现）
 遍历一遍得到 length，第二次从头走 length - N
 
 * 思路2
@@ -14,7 +14,7 @@
 ## 两两交换链表中的节点
 [网址](https://leetcode-cn.com/problems/swap-nodes-in-pairs/)
 
-* 思路1
+* 思路1 （自己的实现）
 
 ```
 /**
