@@ -82,4 +82,55 @@ class Solution {
     }
 }
 ```
+## 61. 旋转链表
+[网址](https://leetcode-cn.com/problems/rotate-list/)
+
+* 思路1
+
+遍历一遍得到length， k % length 得到真正的移动个数
+
+思路1的结果不好，执行用时：108 ms, 在所有 JavaScript 提交中击败了26.27%的用户， 内存消耗：39.8 MB, 在所有 JavaScript 提交中击败了11.52%的用户
+```
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode}
+ */
+var rotateRight = function(head, k) {
+    if (!head || !head.next) return head;
+
+    let length = 1;
+    let current = head;
+    while(current.next) {
+        length++
+        current = current.next;
+    }
+    
+    let step = k % length;
+    if (step === 0) {
+        return head;
+    }
+
+    current.next = head;    // 构成循环链
+    current = head.next;
+    for (let i = 0; i < length - step - 1; i++) {
+        current = current.next;
+        head = head.next;
+    }
+    head.next = null;
+    return current;
+};
+```
+
+* 思路2
+
+想起来前几天做的两个指针fast 和 slow，感觉是一个思路。
+
 
