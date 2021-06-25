@@ -132,5 +132,40 @@ var rotateRight = function(head, k) {
 * 思路2
 
 想起来前几天做的两个指针fast 和 slow，感觉是一个思路。
+最后优化了下，发现整体还是一个思路。
+```
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode}
+ */
+var rotateRight = function(head, k) {
+    if (!head || !head.next || k === 0) return head;
+
+    let length = 1;
+    let fast = head;
+    while (fast.next) {
+        fast = fast.next;
+        length++;
+    }
+
+    fast.next = head; // 循环
+    let step = length - k % length;
+    while(step > 1) {
+        head = head.next;
+        step--;
+    }
+    fast = head.next;
+    head.next = null;
+    return fast;
+};
+```
 
 
