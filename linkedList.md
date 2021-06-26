@@ -1,4 +1,4 @@
-## 删除链表的倒数第 N 个结点
+## 19. 删除链表的倒数第 N 个结点
 [网址](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
 
 * 思路1（自己的实现）
@@ -11,7 +11,7 @@
 递归思路，recursive(head.next, N), 递归第N次
 
 
-## 两两交换链表中的节点
+## 24. 两两交换链表中的节点
 [网址](https://leetcode-cn.com/problems/swap-nodes-in-pairs/)
 
 * 思路1 （自己的实现）
