@@ -167,5 +167,73 @@ var rotateRight = function(head, k) {
     return fast;
 };
 ```
+## 82. 删除排序链表中的重复元素 II
+[网址](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/)
 
+* 思路1
+
+我看错题了，题目要求重复的元素全部移除，我理解成重复的元素留一个，谨慎！！！
+
+```
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var deleteDuplicates = function(head) {
+    if (!head || !head.next) return head;
+
+    let max = head.val;
+    let current = head;
+    while (current.next) {
+        if (max === current.next.val) {
+            current.next = current.next.next;
+            continue;
+        }
+        max = current.next.val;
+        current = current.next;
+    }
+    return head;
+};
+```
+
+* 思路2
+
+一直没有做出来，后来看了答案，sad～
+总结一下，自己被排序和max值的思路限制住了，一直想用一个指针搞定，但是这种就会丢失前序指针，导致删除时不能完全删除。
+```
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var deleteDuplicates = function(head) {
+    let current = new ListNode(Number.MIN_VALUE, head);
+    head = current; // 保留头节点 避免被删
+
+    let left, right;
+    while (current.next) {
+        left = right = current.next;
+        while (right.next && left.val === right.next.val) {
+            right = right.next;
+        }
+
+        if (left === right) current = current.next;
+        else current.next = right.next;
+    }
+    return head.next;
+};
+```
 
