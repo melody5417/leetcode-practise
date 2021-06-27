@@ -265,3 +265,72 @@ var deleteDuplicates = function(head) {
     return head;
 };
 ```
+
+## 2. 两数相加
+[网址](https://leetcode-cn.com/problems/add-two-numbers/)
+
+* 思路1
+
+思路1比较直白，从链表头，也就是低位开始相加，然后考虑进位。
+```
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers = function(l1, l2) {
+    let head = new ListNode(0, null);
+    let current = head;
+    let nextBaseVal = 0;
+    while(l1 || l2 || (nextBaseVal !== 0 )) {
+        let item = new ListNode(0, null);
+        current.next = item;
+        current = current.next;
+
+        const sum = (l1 ? l1.val : 0) + (l2 ? l2.val : 0) + nextBaseVal; 
+        current.val = sum % 10;
+        nextBaseVal = sum <= 9 ? 0 : parseInt(sum / 10);
+        
+        l1 = l1 ? l1.next : null;
+        l2 = l2 ? l2.next : null;
+    }
+    return head.next;
+};
+```
+* 思路2 - 递归
+
+思考递归解法的时候差一点就成功了。。。。 加油！
+```
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers = function(l1, l2) {
+    return addTwoNumbers2(l1, l2, 0);
+};
+
+var addTwoNumbers2 = function(l1, l2, nextVal) {
+    // 结束条件
+    if (!l1 && !l2) {
+        return nextVal === 0 ? null : new ListNode(nextVal, null);
+    }
+
+    const sum = (l1 ? l1.val : 0) + (l2 ? l2.val : 0) + nextVal;
+    return new ListNode(sum % 10, addTwoNumbers2((l1 ? l1.next : null), (l2 ? l2.next : null), parseInt(sum / 10)));
+}
+```
