@@ -334,3 +334,47 @@ var addTwoNumbers2 = function(l1, l2, nextVal) {
     return new ListNode(sum % 10, addTwoNumbers2((l1 ? l1.next : null), (l2 ? l2.next : null), parseInt(sum / 10)));
 }
 ```
+
+## 86. 分隔链表
+[网址]()
+
+* 思路
+
+题目描述的不是很清楚，看了好几遍才明白。 整体就是把所有小于x的节点按顺序组成新的链表，然后再尾部再追加剩下的节点链表。
+搞笑的是发现运行用例后的时间和空间数据有问题，一样的代码第一次跑时间只超过19%的，第二次运行超过90%，即使有用例的区别，这个数据也是奇怪了。
+
+```
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} x
+ * @return {ListNode}
+ */
+var partition = function(head, x) {
+    if (!head || !head.next) return head;
+
+    let current = head = new ListNode(0, head);
+    let anotherCurrent = anotherHead = new ListNode(0, null);
+
+    while (current.next) {
+        if (current.next.val < x) {
+            anotherCurrent.next = current.next;
+            anotherCurrent = anotherCurrent.next;
+            current.next = current.next.next;
+            anotherCurrent.next = null;
+        } else {
+            current = current.next;
+        }
+    }
+
+    // splice
+    anotherCurrent.next = head.next;
+    return anotherHead.next;
+};
+```
