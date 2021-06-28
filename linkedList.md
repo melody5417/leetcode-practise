@@ -336,7 +336,7 @@ var addTwoNumbers2 = function(l1, l2, nextVal) {
 ```
 
 ## 86. 分隔链表
-[网址]()
+[网址](https://leetcode-cn.com/problems/partition-list/)
 
 * 思路
 
