@@ -384,7 +384,7 @@ var partition = function(head, x) {
 
 * 思路1
 
-比较直白的思路就是，每次取k个链表的头部节点的最小值节点。
+比较直白的思路就是，每次取k个链表的头部节点的最小值节点。今天做的是困难的级别哦~
 ```
 /**
  * Definition for singly-linked list.
