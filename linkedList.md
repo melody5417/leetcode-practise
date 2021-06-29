@@ -378,3 +378,70 @@ var partition = function(head, x) {
     return anotherHead.next;
 };
 ```
+
+## 23. 合并K个升序链表
+[网址](https://leetcode-cn.com/problems/merge-k-sorted-lists/)
+
+* 思路1
+
+比较直白的思路就是，每次取k个链表的头部节点的最小值节点。
+```
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode[]} lists
+ * @return {ListNode}
+ */
+ var mergeKLists = function(lists) {
+  let current = head = new ListNode(0, null);
+
+  while(lists && lists.length > 0) {
+    let {list, index} = minKLists(lists);
+    if (!list) {
+        return head.next;
+    }
+
+    current.next = list;
+    if (list.next) {
+      lists[index] = list.next;
+    } else {
+      lists.splice(index, 1);
+      if (lists.length === 0) {
+        lists = null;
+      }
+    }
+    current.next.next = null;
+    current = current.next;
+  }
+
+  return head.next;
+};
+
+// get min list
+var minKLists = function(lists) {
+  if (!lists || lists.length === 0) return null;
+
+  let minPoint;
+  let minIndex;
+  lists.forEach((element, index) => {
+    if (!element || element.length === 0) {
+        return;
+    }
+    if (!minPoint) {
+      minPoint = element;
+      minIndex = index;
+      return;
+    }
+    if (minPoint.val > element.val) {
+      minPoint = element;
+      minIndex = index;
+    }
+  });
+  return { list: minPoint, index: minIndex };
+}
+```
