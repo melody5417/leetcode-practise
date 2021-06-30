@@ -538,3 +538,7 @@ var reverse = function(head, tail) {
     return {'head': newHead.next, 'tail': newTail};
 }
 ```
+
+* 思路2 
+
+在思路1上的优化，思路1需要先遍历k， 然后反转k， 这里统一成一步，遍历k的同时进行翻转。
