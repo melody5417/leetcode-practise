@@ -445,3 +445,96 @@ var minKLists = function(lists) {
   return { list: minPoint, index: minIndex };
 }
 ```
+
+## 25. K 个一组翻转链表
+[网址](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
+
+* 思路1 
+
+比较直白和暴力，这道题整体两个单元策略，1是找到k个节点，2是反转k个节点。 但是显然这个的效率有点低，结果不是很理想。
+
+执行用时：184 ms, 在所有 JavaScript 提交中击败了5.27%的用户内存消耗：45 MB, 在所有 JavaScript 提交中击败了5.06%的用户
+```
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode}
+ */
+var reverseKGroup = function(head, k) {
+    console.log(head, k);
+
+    if (k < 2) return head;
+    if (!head || !head.next) return head;
+
+    let current = new ListNode(0, head);
+    head = current;
+
+    while (current.next) {
+        console.log('current', current);
+
+        // find first k
+        const {start: kStart, end: KEnd} = getFirtKGroup(current.next, k);
+        if (!kStart || !KEnd) return head.next;
+        // console.log('getFirstKGroup finished', current, kStart.val, KEnd.val);
+
+        // reverse
+        const {head: KHead, tail: kTail} = reverse(kStart, KEnd);
+        // console.log('reverse finished', 'head', KHead, 'tail', kTail);
+
+        // splice
+        current.next = KHead;
+        current = kTail;
+        // console.log('head', head);
+    }
+    
+    return head.next;
+};
+
+/**
+ * get first k group, return {start pointer, end pointer}
+ * if less than k, return {start pointer, end pointer is null}
+ */
+var getFirtKGroup = function(head, k) {
+    let start = end = head;
+    let index = k;
+    while(index > 1 && end) {
+        index--;
+        end = end.next;
+    }
+    if (index === 1) return {start, end};
+    return {start, end: null};
+}
+
+/**
+ * reverse list, return new head and tail
+ */
+var reverse = function(head, tail) {
+    if (!head || !head.next) return { head, tail: head};
+
+    let current = head;
+    let newHead = new ListNode(0, null);
+    let newTail;
+    let end = tail.next;
+
+    while (current !== end) {
+        let temp = current;
+        current = current.next;
+        temp.next = newHead.next;
+        newHead.next = temp; 
+        
+        if (!newTail) {
+            newTail = temp;
+            newTail.next = end;
+        }
+    }
+    
+    return {'head': newHead.next, 'tail': newTail};
+}
+```
