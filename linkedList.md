@@ -542,3 +542,51 @@ var reverse = function(head, tail) {
 * 思路2 
 
 在思路1上的优化，思路1需要先遍历k， 然后反转k， 这里统一成一步，遍历k的同时进行翻转。
+```
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode}
+ */
+var reverseKGroup = function(head, k) {
+    console.log(head, k);
+
+    let dummy = new ListNode(0, head);
+    let length = 0;
+    while(head) {
+        length++;
+        head = head.next;
+    }
+    console.log('length', length);
+
+    head = dummy.next;
+    let prev = dummy;
+    let curr = head;
+    let next;
+    for(let i = 0; i< parseInt(length / k); i++) {
+
+        let reverseDummy = new ListNode(0, null);
+        for (let j = 0; j < k; j++) {
+            next = curr.next;
+            curr.next = reverseDummy.next;
+            reverseDummy.next = curr;
+            curr = next;
+        }
+        console.log('reverseDummy', reverseDummy);
+
+        prev.next.next = next;
+        curr = prev.next;
+        prev.next = reverseDummy.next;
+        prev = curr;
+        curr = curr.next;
+    }
+    return dummy.next;
+};
+```
