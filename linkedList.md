@@ -590,3 +590,60 @@ var reverseKGroup = function(head, k) {
     return dummy.next;
 };
 ```
+
+## 92. 反转链表 II
+[网址](https://leetcode-cn.com/problems/reverse-linked-list-ii/)
+
+* 思路1
+最初居然看错题了，以为left和right是指 值匹配，结果前几次提交都没过。 思路比较简单，先匹配左，然后创建另外一个reverse列表用来反转匹配的这部分节点，然后和之前链表拼接。
+
+```
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} left
+ * @param {number} right
+ * @return {ListNode}
+ */
+var reverseBetween = function(head, left, right) {
+    // console.log(head, left, right);
+
+    if (!head || !head.next || left === right) return head;
+
+    head = new ListNode(0, head);
+    const reversePrevHead = new ListNode(0, null);
+    let reverseTail;
+
+    let prev = head;
+    for (let i = 0; i < left - 1; i++) {
+        prev = prev.next;
+    }
+
+    let current = prev;
+    for (let i = 0; i < right - left; i++) {
+        current = current.next;
+        prev.next = current.next;
+        current.next = reversePrevHead.next;
+        reversePrevHead.next = current;
+        if (!reverseTail) {
+            reverseTail = current;
+        }
+
+        current = prev;
+    }
+
+    // console.log('prev', prev, 'reversePrevHead', reversePrevHead)
+
+    reverseTail.next = prev.next.next;
+    prev.next.next =reversePrevHead.next;
+
+    return head.next;
+
+};
+```
